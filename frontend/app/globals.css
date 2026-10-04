@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+/*
+ * Bind the Geist fonts declared in `app/layout.tsx` to the Tailwind theme.
+ * Without this the variables are loaded but `font-sans`/`font-mono` ignore them.
+ */
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@theme {
+  /* Surfaces, from page background up to raised cards. */
+  --color-canvas: #070b14;
+  --color-surface: #0b1120;
+  --color-raised: #111a2e;
+  --color-line: #1e293b;
+
+  /* Text hierarchy. */
+  --color-ink: #e2e8f0;
+  --color-muted: #94a3b8;
+  --color-faint: #64748b;
+
+  /* Status accents, mirroring the IssueStatus enum. */
+  --color-open: #38bdf8;
+  --color-progress: #fbbf24;
+  --color-closed: #34d399;
+
+  /* Priority accents, mirroring the IssuePriority enum. */
+  --color-low: #94a3b8;
+  --color-medium: #fb923c;
+  --color-high: #fb7185;
+
+  /* Brand. */
+  --color-accent: #6366f1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+  }
+
+  /* A subtle grid keeps large empty areas from reading as flat black. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(
+        ellipse 80% 55% at 50% -10%,
+        rgb(99 102 241 / 0.16),
+        transparent 70%
+      ),
+      linear-gradient(rgb(148 163 184 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(148 163 184 / 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 56px 56px, 56px 56px;
+  }
+
+  ::selection {
+    background-color: rgb(99 102 241 / 0.35);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@utility panel {
+  border: 1px solid var(--color-line);
+  background-color: rgb(17 26 46 / 0.6);
+  border-radius: 0.75rem;
+}
